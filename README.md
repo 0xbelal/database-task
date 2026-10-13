@@ -1,106 +1,139 @@
-# e-commerce database
+# E-Commerce Database
 
-## system requirements document(SRD)
+## System Requirements Document (SRD)
 
-## 1. introduction
+## Table of Contents
 
-- document defines the core entities for an e-commerce system
+1. [Introduction](#1-introduction)
+2. [System Overview](#2-system-overview)
+3. [Functional System Entities](#3-functional-system-entities)
+   - [3.1 Product Catalog](#31-product-catalog)
+   - [3.2 Customer Info](#32-customer-info)
+   - [3.3 Order Info](#33-order-info)
+   - [3.4 Payment Transaction](#34-payment-transaction)
+   - [3.5 Shipping](#35-shipping)
+   - [3.6 Reviews and Ratings](#36-reviews-and-ratings)
+4. [Entity Relationships](#4-entity-relationships)
 
 ---
-## 2. system overview 
 
-- system consists of six core entities : 
--   Product Catalog Management
--   Customer Info
--   Payment Transaction
--   Shipping
--   Reviews and Ratings
+## 1. Introduction
+
+This document defines the core entities of an e-commerce system and the attributes each one stores.
 
 ---
-## 3. functional system entities
+
+## 2. System Overview
+
+The system consists of **six core entities**:
+
+1. Product Catalog
+2. Customer Info
+3. Order Info
+4. Payment Transaction
+5. Shipping
+6. Reviews and Ratings
+
+---
+
+## 3. Functional System Entities
 
 ### 3.1 Product Catalog
-> stores info about all products 
 
-| Product Catalog  | Attributes                               |
+> Stores information about all products.
+
+| Attribute        | Description                              |
 | :--------------- | :--------------------------------------- |
-| **Product Name** | the display name of the product          |
-| **Description**  | detailed text description of the product |
-| **Price**        | selling price of the product             |
-| **Quantity**     | current count avaliable for purchase     |
+| **Product Name** | The display name of the product          |
+| **Description**  | Detailed text description of the product |
+| **Price**        | Selling price of the product             |
+| **Quantity**     | Current stock available for purchase     |
 | **Images**       | One or more product images               |
 
 ---
 
 ### 3.2 Customer Info
 
->stores all registered users information
+> Stores information about all registered customers.
 
-| Customer Info     | Attributes                                 |
-| :---------------- | :----------------------------------------- |
-| **Customer Name** | the display name of the customer           |
-| **Contacts**      | phone number and email                     |
-| **Address**       | address that orders will being shipping on |
-| **Login Info**    | usernaem and password                      |
+| Attribute         | Description                                      |
+| :---------------- | :----------------------------------------------- |
+| **Customer Name** | The display name of the customer                 |
+| **Contacts**      | Phone number and email                           |
+| **Address**       | Address that orders will be shipped to           |
+| **Login Info**    | Username and password (stored as a secure hash)  |
 
 ---
 
 ### 3.3 Order Info
 
-> stores all data related to customer orders
+> Stores all data related to customer orders.
 
-| Order Info      | Attributes                               |
-|:---------------|:------------------------------------------|
-|**Order Non.**   |unique number for each order              |
-|**Customer Info**|info of customer who placed the order     |
-|**Date & Time**  |Timestamp when order placed               |
-|**Products**     |list of product items                     |
-|**Order Status** |current status of the order               |
+| Attribute          | Description                              |
+| :----------------- | :--------------------------------------- |
+| **Order No.**      | Unique number for each order             |
+| **Customer Info**  | The customer who placed the order        |
+| **Date & Time**    | Timestamp of when the order was placed   |
+| **Products**       | List of ordered product items            |
+| **Order Status**   | Current status of the order              |
 
->**Status Value** : `Pending` → `Processing` → `Shipped` → `Delivered`
+**Order Status flow:** `Pending` → `Processing` → `Shipped` → `Delivered`
 
---- 
-### 3.4 Payment Transaction 
+---
 
-> save all **orders payments** (`Transaction log`)
+### 3.4 Payment Transaction
 
-| Payment Transaction | Attributes                                               |
-| :------------------ | :------------------------------------------------------- |
-| **Transaction ID**  | Unique no. for each payment                              |
-| **Customer ID**     | reference to customer making it                          |
-| **Payment Amount**  | total amount charged                                     |
-| **Payment Method**  | the method used (e.g. `credit card`, `cash on delivery`) |
-| **Timestamp**       | date and time of precess the transaction                 |
+> Stores all order payments (transaction log).
+
+| Attribute          | Description                                                  |
+| :----------------- | :----------------------------------------------------------- |
+| **Transaction ID** | Unique number for each payment                               |
+| **Customer ID**    | Reference to the customer who made the payment               |
+| **Payment Amount** | Total amount charged                                         |
+| **Payment Method** | Method used (e.g. `Credit Card`, `Cash on Delivery`)         |
+| **Timestamp**      | Date and time the transaction was processed                  |
 
 ---
 
 ### 3.5 Shipping
 
->tracks all shipping info for orders
+> Tracks all shipping information for orders.
 
-| Shipping               | Attributes                       |
-| :--------------------- | :------------------------------- |
-| **Order ID**           | reference to order               |
-| **Shipping Carrier**   | name and details of carrier      |
-| **Tracking Number**    | tracking code for shipping       |
-| **Shipping Status**    | current shipping status of order |
-| **Estimated Delivery** | expected arrival date            |
-| **Actual Delivery**    | actual date of delivery          |
-| **Notes**              | any comment or updates notes     |
+| Attribute              | Description                          |
+| :--------------------- | :----------------------------------- |
+| **Order ID**           | Reference to the order               |
+| **Shipping Carrier**   | Name and details of the carrier      |
+| **Tracking Number**    | Tracking code for the shipment       |
+| **Shipping Status**    | Current shipping status of the order |
+| **Estimated Delivery** | Expected arrival date                |
+| **Actual Delivery**    | Actual date of delivery              |
+| **Notes**              | Comments or update notes             |
 
->**Status Value** : `Processing` → `Out for Delivery` → `Delivered`
-
+**Shipping Status flow:** `Processing` → `Out for Delivery` → `Delivered`
 
 ---
 
 ### 3.6 Reviews and Ratings
 
-> stores customer feedback and rating after delivered orders
+> Stores customer feedback and ratings after orders are delivered.
 
-| Reviews and Ratings | Attributes                                           |
-| :------------------ | :--------------------------------------------------- |
-| **Product ID**      | reference to the product                             |
-| **Customer ID**     | reference to customer who submitted the review       |
-| **Review Text**     | customer feedback                                    |
-| **Rating Score**    | numeric rating from 1 to 5 (`1`, `2`, `3`, `4`, `5`) |
-| **Timestamp**       | date and time of review                              |
+| Attribute        | Description                                          |
+| :--------------- | :--------------------------------------------------- |
+| **Product ID**   | Reference to the reviewed product                    |
+| **Customer ID**  | Reference to the customer who submitted the review   |
+| **Review Text**  | Customer feedback                                    |
+| **Rating Score** | Numeric rating from 1 to 5                           |
+| **Timestamp**    | Date and time the review was submitted               |
+
+---
+
+## 4. Entity Relationships
+
+| Relationship                       | Type         |
+| :--------------------------------- | :----------- |
+| Customer → Order                   | One to many  |
+| Order ↔ Product                    | Many to many |
+| Order → Payment Transaction        | One to many  |
+| Order → Shipping                   | One to one   |
+| Customer → Review                  | One to many  |
+| Product → Review                   | One to many  |
